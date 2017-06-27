@@ -8,16 +8,6 @@
 
 (def alpha-length (- end start))
 
-#_(defn inc-by
-  [chr shift-by]
-  (let [idx (int chr)
-        simple-sum (+ idx shift-by)]
-    (char
-     (if (> simple-sum end)
-       (+ start
-          (mod (+ (int chr) shift-by) end))
-       simple-sum)))))
-
 (defn uppercase?
   [chr]
   (contains? (set (range start-upper (inc end-upper))) (int chr)))
@@ -61,3 +51,17 @@
    {}
    (for [n (range (inc alpha-length))]
      [(char (+ n start)) (gen-map n)])))
+
+(defn vigerene
+  [word cipher]
+  (clojure.string/join
+   (let [padded-key (pad-to-message cipher word)
+         all-maps (many-maps)]
+
+     (for [[k v] (map vector padded-key word)]
+       (get-in all-maps [k v])))))
+
+(def sample-word "vigerenecipher")
+(def sample-cipher "counton")
+
+(vigerene sample-word sample-cipher)
