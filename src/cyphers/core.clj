@@ -49,4 +49,15 @@
 
 (def rot-by-custom subs)
 
+(defn pad-to-message
+  [cipher message]
+  (let [msglength (count message)]
+    (clojure.string/join
+     (take msglength (apply concat (repeat cipher))))))
 
+(defn many-maps
+  []
+  (into
+   {}
+   (for [n (range (inc alpha-length))]
+     [(char (+ n start)) (gen-map n)])))
