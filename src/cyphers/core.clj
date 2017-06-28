@@ -27,6 +27,12 @@
         (for [c all-chars]
           [(char c) (inc-by shift-by c)])))
 
+(def many-maps
+  (into
+   {}
+   (for [n (range (inc alpha-length))]
+     [(char (+ n start)) (gen-map n)])))
+
 (defn subs
   [word subs-map]
   (clojure.string/join
@@ -45,18 +51,11 @@
     (clojure.string/join
      (take msglength (cycle cipher)))))
 
-(defn many-maps
-  []
-  (into
-   {}
-   (for [n (range (inc alpha-length))]
-     [(char (+ n start)) (gen-map n)])))
-
 (defn vigerene
   [word cipher]
   (clojure.string/join
    (let [padded-key (pad-to-message cipher word)
-         all-maps (many-maps)]
+         all-maps many-maps]
 
      (for [[k v] (map vector padded-key word)]
        (get-in all-maps [k v])))))
