@@ -43,7 +43,7 @@
   [cipher message]
   (let [msglength (count message)]
     (clojure.string/join
-     (take msglength (apply concat (repeat cipher))))))
+     (take msglength (cycle cipher)))))
 
 (defn many-maps
   []
@@ -60,8 +60,3 @@
 
      (for [[k v] (map vector padded-key word)]
        (get-in all-maps [k v])))))
-
-(def sample-word "vigerenecipher")
-(def sample-cipher "counton")
-
-(vigerene sample-word sample-cipher)
