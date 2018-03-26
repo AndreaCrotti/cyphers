@@ -33,7 +33,7 @@
    (for [n (range (inc alpha-length))]
      [(char (+ n start)) (gen-map n)])))
 
-(defn subs
+(defn substitute
   [word subs-map]
   (clojure.string/join
    (map #(get subs-map %) word)))
@@ -41,9 +41,9 @@
 (defn rot-by
   [word shift-by]
   (let [subs-map (gen-map shift-by)]
-    (subs word subs-map)))
+    (substitute word subs-map)))
 
-(def rot-by-custom subs)
+(def rot-by-custom substitute)
 
 (defn pad-to-message
   [cipher message]
